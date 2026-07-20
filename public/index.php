@@ -20,7 +20,7 @@ $result = $conn->query($sql);
     <!-- Header Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="index.php">Car Service Hub</a>
+            <a class="navbar-brand fw-bold" href="index.php">Car Service Center</a>
         </div>
     </nav>
 
