@@ -1,6 +1,16 @@
 # Car Service Appointment System
 
-Welcome to the Car Service Appointment System project! This project is designed to help you learn the fundamentals of web programming (PHP), HTML forms, and database management (MariaDB / SQL).
+Welcome to the *Car Service Appointment System* project! This project is designed to help you learn the fundamentals of web programming (PHP), HTML forms, and database management (MariaDB / SQL).
+
+## Why This Project Setup?
+
+In standard Malaysian SPM / Computer Science curricula, students are typically introduced to web and database development using **XAMPP on Windows**. 
+
+While XAMPP is commonly used on Windows in schools, this project uses **NixOS / Linux** with **`nix` + `devenv`** to deliver a more modern, flexible setup. This provides several key advantages:
+
+* **No Manual Software Installers:** Everything needed (PHP, MariaDB, phpMyAdmin) is defined cleanly in code and kept isolated inside this project directory.
+* **No Hidden Background Services:** Stopping the server commands cleanly shuts down MariaDB without leaving behind permanent system background processes.
+* **Reproducible Setup:** Anyone cloning this repository gets the exact same versions of PHP and MariaDB, avoiding any *"it works on my machine"* troubleshooting.
 
 ## Key Definitions
 
@@ -20,13 +30,13 @@ Before you begin, here are definitions for terms you will see throughout this gu
 
 ## Prerequisites
 
-Your machine must have the following tools installed and configured:
+To run this project, your system only needs:
 
-- NixOS operating system.
+- *Nix Package Manager* (or *NixOS* operating system).
+- `direnv` shell extension (with `nix-direnv` integration enabled).
+- `git` version control tool.
 
-- git version control tool.
-
-- direnv shell extension (configured to automatically load environment settings).
+> **Note:** You do **not** need to install PHP, MariaDB, or `devenv` globally. `direnv` and `nix` will automatically fetch and manage everything within this project folder!
 
 ## Getting Started
 
@@ -77,19 +87,19 @@ $cfg['Servers'][$i]['AllowNoPassword'] = true;
 
 ### Step 4: Import Initial Database Schema
 
-Open Terminal 1 and start MariaDB:
+#### 1. Open Terminal 1 and start MariaDB:
 
 ```Bash
 devenv up
 ```
 
-Open Terminal 2 and start phpMyAdmin:
+#### 2. Open Terminal 2 and start phpMyAdmin:
 
 ```Bash
 php -S 127.0.0.1:8001 -t phpmyadmin
 ```
 
-Open `http://localhost:8001` in your web browser.
+#### 3. Open `http://localhost:8001` in your web browser.
 
 Log in with:
 
