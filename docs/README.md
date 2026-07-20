@@ -62,7 +62,7 @@ Run:
 direnv allow
 ```
 
-    Note: The first time you run this, Nix will download PHP, MariaDB, and other required packages. This may take a few minutes.
+> **Note**: The first time you run this, Nix will download PHP, MariaDB, and other required packages. This may take a few minutes.
 
 ### Step 3: Install phpMyAdmin (One-Time Setup)
 
