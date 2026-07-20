@@ -11,6 +11,8 @@
     php83
     php83Packages.composer
     #phpMyAdmin
+
+    inputs.my-nvim.packages.${pkgs.stdenv.system}.default
   ];
 
   # https://devenv.sh/languages/
