@@ -1,6 +1,6 @@
-# Car Service Appointment System
+# XAWAD: Simple XAMPP alternative Web Apps Development Environment Using PHP and MariaDB
 
-Welcome to the *Car Service Appointment System* project! This project is designed to help you learn the fundamentals of web programming (PHP), HTML forms, and database management (MariaDB / SQL).
+Welcome to the *Web Apps Development Environment Using PHP and MariaDB* project! This project is designed to help you learn the fundamentals of web programming (PHP), HTML forms, and database management (MariaDB / SQL).
 
 ## Why This Project Setup?
 
@@ -49,8 +49,8 @@ Open your terminal and clone the project into your local source directory:
 ```Bash
 mkdir -p ~/src
 cd ~/src
-git clone https://github.com/your-username/car-service-app.git
-cd car-service-app
+git clone https://github.com/mnajib/xawad.git
+cd xawad
 ```
 
 ### Step 2: Enable the Environment
@@ -79,7 +79,7 @@ OR
 #### Option B: Download phpMyAdmin zip to `tmp/`
 
 ```Bash
-cd ~/src/car-service-app
+cd ~/src/xawad
 mkdir -p tmp
 curl -o tmp/phpmyadmin.zip https://files.phpmyadmin.net/phpMyAdmin/5.2.3/phpMyAdmin-5.2.3-all-languages.zip
 ```
@@ -89,14 +89,14 @@ curl -o tmp/phpmyadmin.zip https://files.phpmyadmin.net/phpMyAdmin/5.2.3/phpMyAd
 Create target directory
 
 ```Bash
-cd ~/src/car-service-app
+cd ~/src/xawad
 mkdir -p phpmyadmin
 ```
 
 Extract and strip the top-level directory structure
 
 ```Bash
-cd ~/src/car-service-app
+cd ~/src/xawad
 unzip -j tmp/phpmyadmin.zip -d phpmyadmin/
 ```
 
@@ -112,7 +112,7 @@ $cfg['Servers'][$i]['host'] = '127.0.0.1';
 $cfg['Servers'][$i]['AllowNoPassword'] = true;
 ```
 
-### Step 5: Import Initial Database Schema
+### Step 5: Import Initial Database Schema for Example App (Car Service Booking System)
 
 #### 5.1 Open Terminal 1 and start MariaDB:
 
@@ -123,10 +123,10 @@ devenv up
 #### 5.2 Open Terminal 2 and start phpMyAdmin:
 
 ```Bash
-php -S 127.0.0.1:8001 -t phpmyadmin
+php -S 127.0.0.1:8000 -t phpmyadmin
 ```
 
-#### 5.3 Open `http://localhost:8001` in your web browser.
+#### 5.3 Open `http://localhost:8000` in your web browser.
 
 Log in with:
 
@@ -139,7 +139,7 @@ Select `car_service_db` on the left sidebar.
 
 Click the SQL tab at the top.
 
-Open `schema.sql` from the project root folder, copy its content, paste it into the SQL text box, and click Go.
+Open `schema.sql` from the app1 root folder `./apps/app1/db/schema.sql`, copy its content, paste it into the SQL text box, and click Go.
 
 ## Daily Development Workflow
 
@@ -148,41 +148,62 @@ When you start working on the project, you will use three terminal windows or ta
 ### 1. Start MariaDB (Terminal 1)
 
 ```Bash
-cd ~/src/car-service-app
+cd ~/src/xawad
 devenv up
 ```
 
-### 2. Start Main App Server (Terminal 2)
+### 2. Start phpMyAdmin (Terminal 2)
 
 ```Bash
-cd ~/src/car-service-app
-php -S 127.0.0.1:8000 -t public
+cd ~/src/xawad
+php -S 127.0.0.1:8000 -t phpmyadmin
 ```
 
-Access the web application at: `http://localhost:8000`
+Access the database interface at: `http://localhost:8000`
 
-### 3. Start phpMyAdmin (Terminal 3)
+### 3. Start App Server (Terminal 3)
 
 ```Bash
-cd ~/src/car-service-app
-php -S 127.0.0.1:8001 -t phpmyadmin
+cd ~/src/xawad
+php -S 127.0.0.1:8001 -t apps/app1/public
 ```
 
-Access the database interface at: `http://localhost:8001`
+Access the web application at: `http://localhost:8001`
+
+### 4. Start Another App Server (Terminal 4)
+
+Similarly, to start another web apps, for example: apps2
+
+```Bash
+cd ~/src/xawad
+php -S 127.0.0.1:8002 -t apps/app2/public
+```
+
+Access the web application at: `http://localhost:8002`
 
 ## Project Directory Overview
 
 ```
-car-service-app/
-├── public/                 # Files accessible to web browsers
-│   ├── index.php           # App dashboard (lists appointments)
-│   ├── book.php            # HTML booking form
-│   └── process-book.php    # Form handling and SQL insertion logic
-├── db.php                  # Database connection helper script
-├── schema.sql              # Initial database table structure & sample data
-├── devenv.nix              # Environment definition (Nix configuration)
-├── phpmyadmin/             # Web interface for MariaDB management
-└── .devenv/                # Local runtime data & database state (Git ignored)
+xawad/
+├── apps/
+│   ├── app1/
+│   │   ├── db/
+│   │   │   ├── db/schema.sql       # Initial database table structure & sample data
+│   │   │   └── db/db.php           # Database connection helper script
+│   │   └── public/                 # Files accessible to web browsers
+│   │       ├── index.php           # App dashboard (lists appointments)
+│   │       ├── book.php            # HTML booking form
+│   │       └── process-book.php    # Form handling and SQL insertion logic
+│   └── app2/
+│       ├── db/
+│       │   ├── db/schema.sql
+│       │   └── db/db.php
+│       └── public/
+│           └── index.php
+├── phpmyadmin/                     # Web interface for MariaDB management
+│   └── config.inc.php              #
+├── devenv.nix                      # Environment definition (Nix configuration)
+└── .devenv/                        # Local runtime data & database state (Git ignored)
 ```
 
 ## Stopping the Servers

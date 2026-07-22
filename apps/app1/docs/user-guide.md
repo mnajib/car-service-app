@@ -18,23 +18,21 @@ Selamat datang ke Panduan Pengguna **Sistem Temujanji Servis Kereta**. Dokumen i
 
 Sebelum membuka laman web dalam pelayar, pastikan persekitaran pembangunan tempatan (*development environment*) telah dijalankan melalui peranti anda:
 
-1. **Buka Terminal & Masuk ke Folder Projek:**
-    ```bash
-    cd ~/src/car-service-app
-    ```
-2. Jalankan Perkhidmatan Pangkalan Data (MariaDB):
+1. Jalankan Perkhidmatan Pangkalan Data (MariaDB):
     ```Bash
+    cd ~/src/xawad
     devenv up
     ```
-3. Jalankan Pelayan Web PHP (Di Tab Terminal Kedua):
+2. Jalankan Pelayan Web PHP
     ```Bash
-    php -S 127.0.0.1:8000 -t public
+    cd ~/src/xawad
+    php -S 127.0.0.1:8001 -t apps/app1/public
     ```
-4. Buka Laman Web dalam Pelayar:
+3. Buka Laman Web dalam Pelayar:
 
     Layari pautan berikut di Chrome, Firefox, atau pelayar pilihan anda:
 
-    `http://127.0.0.1:8000` atau `http://localhost:8000`
+    `http://127.0.0.1:8001` atau `http://localhost:8001`
 
 ## 2. Halaman Utama: Senarai Temujanji (index.php)
 
@@ -103,16 +101,16 @@ Sistem menggunakan lencana warna (badges) untuk membezakan status setiap temujan
 
 ## 5. Penyelesaian Masalah Ringkas (Troubleshooting)
 
-Q1: Laman web memaparkan ralat "Database Connection Failed"?
+### Q1: Laman web memaparkan ralat "Database Connection Failed"?
 
-    Sebab: Perkhidmatan MariaDB belum dijalankan atau terhenti.
+- Sebab: Perkhidmatan MariaDB belum dijalankan atau terhenti.
 
-    Penyelesaian: Pastikan anda telah menjalankan arahan devenv up di dalam terminal dan soket pangkalan data diisi dengan betul dalam db.php.
+- Penyelesaian: Pastikan anda telah menjalankan arahan devenv up di dalam terminal dan soket pangkalan data diisi dengan betul dalam db.php.
 
-Q2: Mengapa tarikh semalam tidak boleh dipilih dalam borang tempahan?
+### Q2: Mengapa tarikh semalam tidak boleh dipilih dalam borang tempahan?
 
-    Sebab: Ini ialah ciri kawalan kualiti (validation) pada input tarikh (min="<?php echo date('Y-m-d'); ?>") bagi mengelakkan tempahan dibuat pada tarikh yang telah berlalu.
+- Sebab: Ini ialah ciri kawalan kualiti (validation) pada input tarikh (min="<?php echo date('Y-m-d'); ?>") bagi mengelakkan tempahan dibuat pada tarikh yang telah berlalu.
 
-Q3: Bagaimana jika saya hendak menyemak isi pangkalan data secara terus?
+### Q3: Bagaimana jika saya hendak menyemak isi pangkalan data secara terus?
 
-    Layari phpMyAdmin tempatan anda di: http://127.0.0.1:8001 (jika perkhidmatan phpMyAdmin diaktifkan).
+- Layari phpMyAdmin tempatan anda di: http://127.0.0.1:8000 (jika perkhidmatan phpMyAdmin diaktifkan).

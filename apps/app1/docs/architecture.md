@@ -43,17 +43,21 @@ Sistem ini terbahagi kepada tiga lapisan utama:
 Fail-fail projek disusun secara sistematik di dalam folder utama:
 
 ```
-car-service-system/
-├── db.php                     <-- (Back-End) Sambungan pangkalan data MariaDB
-└── public/                    <-- Accessible Web Root
-    ├── assets/
-    │   ├── css/
-    │   │   └── bootstrap.min.css       <-- (Front-End) Fail gaya & susun atur
-    │   └── js/
-    │       └── bootstrap.bundle.min.js <-- (Front-End) Skrip interaktif Bootstrap
-    ├── index.php              <-- (Front-End + Back-End) Paparan senarai temujanji
-    ├── book.php               <-- (Front-End) Borang tempahan temujanji
-    └── process-book.php       <-- (Back-End) Pemprosesan data borang & simpanan SQL
+xawad/
+└── apps/
+    └── app1/
+        ├── db/
+        │   ├── db/schema.sql                       # Initial database table structure & sample data
+        │   └── db/db.php                           # (Back-End) Sambungan pangkalan data MariaDB
+        └── public/                                 # Accessible Web Root
+            ├── assets/
+            │   ├── css/
+            │   │   └── bootstrap.min.css           # (Front-End) Fail gaya & susun atur
+            │   └── js/
+            │       └── bootstrap.bundle.min.js     # (Front-End) Skrip interaktif Bootstrap
+            ├── index.php                           # (Front-End + Back-End) Paparan senarai temujanji
+            ├── book.php                            # (Front-End) Borang tempahan temujanji
+            └── process-book.php                    # (Back-End) Pemprosesan data borang & simpanan SQL
 ```
 
 ## 4. Aliran Kerja & Interaksi Antara Fail (Data Flow)
