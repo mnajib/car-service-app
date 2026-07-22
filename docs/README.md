@@ -4,7 +4,7 @@ Welcome to the *Web Apps Development Environment Using PHP and MariaDB* project!
 
 ## Why This Project Setup?
 
-In standard Malaysian SPM / Computer Science curricula, students are typically introduced to web and database development using **XAMPP on Windows**. 
+In standard Computer Science curricula, students are typically introduced to web and database development using **XAMPP on Windows**.
 
 While XAMPP is commonly used on Windows in schools, this project uses **NixOS / Linux** with **`nix` + `devenv`** to deliver a more modern, flexible setup. This provides several key advantages:
 
