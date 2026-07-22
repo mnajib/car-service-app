@@ -7,7 +7,7 @@
  * Memasukkan fail sambungan pangkalan data (db.php) dari folder utama (root).
  * Tanpa sambungan ini, kita tidak boleh menyimpan data ke dalam MariaDB.
  */
-require_once __DIR__ . '/../db.php';
+require_once __DIR__ . '/../db/db.php';
 
 /*
  * ISTILAH BAHARU: Superglobal $_SERVER & Request Method

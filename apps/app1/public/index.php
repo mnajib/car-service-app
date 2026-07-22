@@ -12,7 +12,7 @@
  * ALTERNATIF: 'include' (jika fail tiada, skrip tetap berjalan dengan amaran),
  *             'require' (jika fail tiada, skrip akan terhenti secara terus).
  */
-require_once __DIR__ . '/../db.php';
+require_once __DIR__ . '/../db/db.php';
 
 /*
  * ISTILAH BAHARU: SQL Statement & Query Execution
