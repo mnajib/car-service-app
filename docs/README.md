@@ -1,6 +1,6 @@
 # XAWAD: Simple XAMPP alternative Web Apps Development Environment Using PHP and MariaDB
 
-Welcome to the *Web Apps Development Environment Using PHP and MariaDB* project! This project is designed to help you learn the fundamentals of web programming (PHP), HTML forms, and database management (MariaDB / SQL).
+Welcome to the **XAWAD** (*Web Apps Development Environment Using PHP and MariaDB*) project! This project is designed to help you learn the fundamentals of web programming (PHP), HTML forms, and database management (MariaDB / SQL).
 
 ## Why This Project Setup?
 
@@ -8,11 +8,11 @@ In standard Computer Science curricula, students are typically introduced to web
 
 While XAMPP is commonly used on Windows in schools, this project uses **NixOS / Linux** with **`nix` + `devenv`** to deliver a more modern, flexible setup. This provides several key advantages:
 
-* **No Manual Software Installers:** Everything needed (PHP, MariaDB, phpMyAdmin) is defined cleanly in code and kept isolated inside this project directory.
-* **No Hidden Background Services:** Stopping the server commands cleanly shuts down MariaDB without leaving behind permanent system background processes.
+* **Zero Manual Downloads:** phpMyAdmin, PHP, and MariaDB are automatically fetched and configured via the Nix Store.
+* **Automated Database Seeding:** Databases, schemas, sample tables, and users are auto-created on initial launch.
+* **No Hidden System Services:** Stopping `devenv` cleanly shuts down MariaDB without leaving background daemons running on your host system.
+* **Selective Process Control:** Run only the specific web applications you are currently testing.
 * **Reproducible Setup:** Anyone cloning this repository gets the exact same versions of PHP and MariaDB, avoiding any *"it works on my machine"* troubleshooting.
-
----
 
 ## Key Definitions
 
@@ -24,13 +24,13 @@ Before you begin, here are definitions for terms you will see throughout this gu
 
 - **Localhost**: A standard hostname that means "this computer." It allows your computer to run web servers locally without sending requests over the Internet.
 
-- **Port**: An internal software endpoint (like a door number on a building) that directs web traffic to a specific server program (e.g., port 8000 for your web app, port 8001 for phpMyAdmin).
+- **Port**: A software endpoint directing network traffic to specific local services (e.g., Port `8000` for phpMyAdmin, Port `8001` for App 1).
 
 - **Database (DB)**: An organized collection of structured data (like tables with rows and columns) stored electronically.
 
 - **Prepared Statements**: A secure method of executing SQL queries that prevents malicious users from manipulating database commands (preventing SQL Injection).
 
----
+- **`devenv` Process Manager**: The CLI tool used to start, stop, and manage local environment services.
 
 ## Prerequisites
 
@@ -40,9 +40,7 @@ To run this project, your system only needs:
 - `direnv` shell extension (with `nix-direnv` integration enabled).
 - `git` version control tool.
 
-> **Note:** You do **not** need to install PHP, MariaDB, or `devenv` globally. `direnv` and `nix` will automatically fetch and manage everything within this project folder!
-
----
+> **Note:** No global installations of PHP, MariaDB, or phpMyAdmin are required.
 
 ## Getting Started
 
@@ -70,124 +68,85 @@ direnv allow
 
 > **Note**: The first time you run this, Nix will download PHP, MariaDB, and other required packages. This may take a few minutes.
 
-### Step 3: Download & Set Up phpMyAdmin (One-Time Setup)
+### Step 3: Launch Services & Initialize Database
 
-To visually manage your database in a browser, download and extract phpMyAdmin directly into your project root directory.
-
-#### Option A: Direct Download via Web Browser
-
-- Go to the official download page: **[phpmyadmin.net/downloads/](https://www.phpmyadmin.net/downloads/)**
-
-- Download the latest **`phpMyAdmin-x.x.x-all-languages.zip`** package and save it into your `tmp/` folder (or project root).
-
-OR
-
-#### Option B: Download phpMyAdmin zip to `tmp/`
+Start the environment with all automated provisioning tasks enabled:
 
 ```Bash
-cd ~/src/xawad
-mkdir -p tmp
-curl -o tmp/phpmyadmin.zip https://files.phpmyadmin.net/phpMyAdmin/5.2.3/phpMyAdmin-5.2.3-all-languages.zip
+devenv up --mode all
 ```
 
-### Step 4: Extract the `.zip` file into a folder named `phpmyadmin` in your project root:
+Upon launching:
 
-Create target directory
+1. MariaDB starts on port 3306.
 
-```Bash
-cd ~/src/xawad
-mkdir -p phpmyadmin
-```
+2. car_service_db is created and seeded with ./apps/app1/db/scheme.sql.
 
-Extract and strip the top-level directory structure
+3. app_user is provisioned with database permissions.
 
-```Bash
-cd ~/src/xawad
-unzip -j tmp/phpmyadmin.zip -d phpmyadmin/
-```
+4. phpMyAdmin is served directly from the Nix store at http://127.0.0.1:8000.
 
-Next, enable passwordless login for local testing by creating `phpmyadmin/config.inc.php`:
+5. App 1 starts automatically at http://127.0.0.1:8001.
 
-```PHP
-<?php
-$i = 0;
-$i++;
+## Accessing Services
 
-$cfg['Servers'][$i]['auth_type'] = 'cookie';
-$cfg['Servers'][$i]['host'] = '127.0.0.1';
-$cfg['Servers'][$i]['AllowNoPassword'] = true;
-```
+| Service | Local URL | Port |Auto-Start |
+|---------|-----------|------|-----------|
+|phpMyAdmin | http://127.0.0.1:8000 | 8000 | Yes |
+|App 1 | http://127.0.0.1:8001 | 8001 | Yes |
+|App 2 | http://127.0.0.1:8002 | 8002 | Manual |
+|App 3 | http://127.0.0.1:8003 | 8003 |Manual |
 
-### Step 5: Import Initial Database Schema for Example App (Car Service Booking System)
+## Controlling Additional Applications
 
-#### 5.1 Open Terminal 1 and start MariaDB:
+To start secondary applications without running everything simultaneously:
 
-```Bash
-devenv up
-```
+- To start App 2
 
-#### 5.2 Open Terminal 2 and start phpMyAdmin:
+    ```Bash
+    devenv processes start app2
+    ```
 
-```Bash
-php -S 127.0.0.1:8000 -t phpmyadmin
-```
+- To stop App 2
 
-#### 5.3 Open `http://localhost:8000` in your web browser.
+    ```Bash
+    devenv processes stop app2
+    ```
 
-Log in with:
+## Database Authentication
 
-```
-    Username: root
-    Password: (Leave completely blank)
-```
+    - phpMyAdmin Login:
+      - Host: 127.0.0.1
+      - Username: root
+      - Password: (Leave blank)
 
-Select `car_service_db` on the left sidebar.
+    - Application Connection Settings (app_user):
+      - Host: 127.0.0.1:3306
+      - Database Name: car_service_db
+      - Username: app_user
+      - Password: app_password
 
-Click the SQL tab at the top.
+## Troubleshooting & State Reset
 
-Open `schema.sql` from the app1 root folder `./apps/app1/db/schema.sql`, copy its content, paste it into the SQL text box, and click Go.
+If MariaDB experiences port conflicts or schema initialization failures:
 
-## Daily Development Workflow
+1. Kill any orphaned MariaDB daemons
 
-When you start working on the project, you will use three terminal windows or tabs:
+    ```Bash
+    pkill -9 -f mariadbd
+    ```
 
-### 1. Start MariaDB (Terminal 1)
+2. Reset local state directory
 
-```Bash
-cd ~/src/xawad
-devenv up
-```
+    ```Bash
+    rm -rf .devenv
+    ```
 
-### 2. Start phpMyAdmin (Terminal 2)
+3. Relaunch environment and tasks
 
-```Bash
-cd ~/src/xawad
-php -S 127.0.0.1:8000 -t phpmyadmin
-```
-
-Access the database interface at: `http://localhost:8000`
-
-### 3. Start App Server (Terminal 3)
-
-```Bash
-cd ~/src/xawad
-php -S 127.0.0.1:8001 -t apps/app1/public
-```
-
-Access the web application at: `http://localhost:8001`
-
-### 4. Start Another App Server (Terminal 4)
-
-Similarly, to start another web apps, for example: apps2
-
-```Bash
-cd ~/src/xawad
-php -S 127.0.0.1:8002 -t apps/app2/public
-```
-
-Access the web application at: `http://localhost:8002`
-
----
+    ```Bash
+    devenv up --mode all
+    ```
 
 ## Project Directory Overview
 
@@ -229,8 +188,6 @@ xawad/
 ├── devenv.nix                      # Environment definition (Nix configuration)
 └── .devenv/                        # Local runtime data & database state (Git ignored)
 ```
-
----
 
 ## Stopping the Servers
 

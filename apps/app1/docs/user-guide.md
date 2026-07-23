@@ -19,16 +19,13 @@ Selamat datang ke Panduan Pengguna **Sistem Temujanji Servis Kereta**. Dokumen i
 Sebelum membuka laman web dalam pelayar, pastikan persekitaran pembangunan tempatan (*development environment*) telah dijalankan melalui peranti anda:
 
 1. Jalankan Perkhidmatan Pangkalan Data (MariaDB):
+
     ```Bash
     cd ~/src/xawad
     devenv up
     ```
-2. Jalankan Pelayan Web PHP
-    ```Bash
-    cd ~/src/xawad
-    php -S 127.0.0.1:8001 -t apps/app1/public
-    ```
-3. Buka Laman Web dalam Pelayar:
+
+2. Buka Laman Web dalam Pelayar:
 
     Layari pautan berikut di Chrome, Firefox, atau pelayar pilihan anda:
 
@@ -66,7 +63,7 @@ Halaman ini digunakan oleh pelanggan atau staf bengkel untuk melerekodkan tempah
 
 Langkah-langkah Membina Tempahan:
 
-1. Klik butang `+ Buat Temujanji Baharu` di halaman utama atau layari terus `http://localhost:8000/book.php`.
+1. Klik butang `+ Buat Temujanji Baharu` di halaman utama atau layari terus `http://localhost:8001/book.php`.
 
 2. Isi maklumat berikut pada borang yang disediakan:
 
