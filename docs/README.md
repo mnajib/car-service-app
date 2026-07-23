@@ -12,6 +12,8 @@ While XAMPP is commonly used on Windows in schools, this project uses **NixOS / 
 * **No Hidden Background Services:** Stopping the server commands cleanly shuts down MariaDB without leaving behind permanent system background processes.
 * **Reproducible Setup:** Anyone cloning this repository gets the exact same versions of PHP and MariaDB, avoiding any *"it works on my machine"* troubleshooting.
 
+---
+
 ## Key Definitions
 
 Before you begin, here are definitions for terms you will see throughout this guide:
@@ -28,6 +30,8 @@ Before you begin, here are definitions for terms you will see throughout this gu
 
 - **Prepared Statements**: A secure method of executing SQL queries that prevents malicious users from manipulating database commands (preventing SQL Injection).
 
+---
+
 ## Prerequisites
 
 To run this project, your system only needs:
@@ -37,6 +41,8 @@ To run this project, your system only needs:
 - `git` version control tool.
 
 > **Note:** You do **not** need to install PHP, MariaDB, or `devenv` globally. `direnv` and `nix` will automatically fetch and manage everything within this project folder!
+
+---
 
 ## Getting Started
 
@@ -181,30 +187,50 @@ php -S 127.0.0.1:8002 -t apps/app2/public
 
 Access the web application at: `http://localhost:8002`
 
+---
+
 ## Project Directory Overview
 
 ```
 xawad/
 ├── apps/
+│   │
 │   ├── app1/
 │   │   ├── db/
 │   │   │   ├── db/schema.sql       # Initial database table structure & sample data
 │   │   │   └── db/db.php           # Database connection helper script
-│   │   └── public/                 # Files accessible to web browsers
-│   │       ├── index.php           # App dashboard (lists appointments)
-│   │       ├── book.php            # HTML booking form
-│   │       └── process-book.php    # Form handling and SQL insertion logic
-│   └── app2/
+│   │   ├── public/                 # Files accessible to web browsers
+│   │   │   ├── index.php           # App dashboard (lists appointments)
+│   │   │   ├── book.php            # HTML booking form
+│   │   │   └── process-book.php    # Form handling and SQL insertion logic
+│   │   └── docs/
+│   │       └── README.md
+│   │
+│   ├── app2/
+│   │   ├── db/
+│   │   │   ├── db/schema.sql
+│   │   │   └── db/db.php
+│   │   ├── public/
+│   │   │   └── index.php
+│   │   └── docs/
+│   │       └── README.md
+│   │
+│   └── app3/
 │       ├── db/
 │       │   ├── db/schema.sql
 │       │   └── db/db.php
-│       └── public/
-│           └── index.php
-├── phpmyadmin/                     # Web interface for MariaDB management
-│   └── config.inc.php              #
+│       ├── public/
+│       │   └── index.php
+│       └── docs/
+│           └── README.md
+│
+├── docs/
+│   └── README.md
 ├── devenv.nix                      # Environment definition (Nix configuration)
 └── .devenv/                        # Local runtime data & database state (Git ignored)
 ```
+
+---
 
 ## Stopping the Servers
 

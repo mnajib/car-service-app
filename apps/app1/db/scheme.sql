@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS appointments (
 );
 
 -- Insert sample data for demo purposes
-INSERT INTO appointments (customer_name, car_plate, service_type, appointment_date, status) 
-VALUES 
+INSERT INTO appointments (customer_name, car_plate, service_type, appointment_date, status)
+VALUES
 ('Ali Ahmad', 'VBC 1234', 'Oil Change', '2026-08-01', 'Confirmed'),
 ('Siti Sarah', 'WYY 8888', 'Brake Inspection', '2026-08-02', 'Pending');

@@ -38,20 +38,29 @@ in {
   # https://devenv.sh/packages/
   packages = with pkgs; [
     git
-    php83
-    php83Packages.composer
 
-    inputs.my-nvim.packages.${pkgs.stdenv.system}.default
+    #php83
+    #php83Packages.composer
+    php84
+    php84Packages.composer
+    #php85
+    #php85Packages.composer
 
-    curl
+    inputs.my-nvim.packages.${pkgs.stdenv.system}.default  # Neovim with custom config
+
+    #curl        # To download phpmyadmin
     unzip
+    litemdview  # GUI markdown viewer
   ];
 
   # https://devenv.sh/languages/
   # languages.rust.enable = true;
   languages.php = {
     enable = true;
-    package = pkgs.php83;
+
+    #package = pkgs.php83;
+    package = pkgs.php84;
+
     #extensions = [
     #  "mysqli" "pdo_mysql" "mbstring" "zip" "gd"
     #];
@@ -64,7 +73,9 @@ in {
   # services.postgres.enable = true;
   services.mysql = {
     enable = true;
-    package = pkgs.mariadb;
+
+    #package = pkgs.mariadb;
+    package = pkgs.mariadb_114; # version 11.4.12
 
     settings = {
       mysqld = {
@@ -75,23 +86,34 @@ in {
 
     # Creates an initial database automatically on first start
     initialDatabases = [
-      { name = "car_service_db"; }
+      {
+        name = "car_service_db";
+        schema = ./apps/app1/db/scheme.sql;
+      }
     ];
 
     # Creates an initial database user automatically on first start
-    #ensureUsers = [
-    #  {
-    #    name = "app_user";
-    #    password = "app_password";
-    #    ensurePermissions = {
-    #      "car_service_db.*" = "ALL PRIVILEGES";
-    #    };
-    #  }
-    #];
+    ensureUsers = [
+      #{
+      #  name = "root";
+      #  password = ""; # Prevents the 'password: unbound variable' bash error
+      #  ensurePermissions = {
+      #    "*.*" = "ALL PRIVILEGES";
+      #  };
+      #}
+      {
+        name = "app_user";
+        password = "app_password";
+        #password = "";
+        ensurePermissions = {
+          "car_service_db.*" = "ALL PRIVILEGES";
+        };
+      }
+    ];
 
     # Initialize root user for local passwordless login
     #initialScript = ''
-    #  CREATE USER IF NOT EXISTS 'root'@'localhost' IDENTIFIED BY '';
+    #  CREATE USER IF NOT EXISTS 'root'@'localhost' IDENTIFIED BY ''';
     #  GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' WITH GRANT OPTION;
     #  FLUSH PRIVILEGES;
     #'';
